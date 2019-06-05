@@ -16,12 +16,14 @@ Route::get('/', function () {
 });
 
 Route::get('/blog', function () {
-    return view('blog');
+    return view('blog.blog');
 });
 
-Route::get('/new', function () {
-    return view('new');
-});
+// /blog/new に GET でアクセスすると、Postontroller の form メソッドを実行するという意味
+// name メソッドでエイリアスをつけることができる
+Route::get('/blog/new', 'BlogController@form')->name('admin_form');
+
+Route::post('/blog/post', 'BlogController@post')->name('admin_post');
 
 Route::get('/codes', function () {
     return view('codes');
