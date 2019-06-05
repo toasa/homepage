@@ -1,6 +1,6 @@
 @extends("layouts.common")
 
-@section("title", "new")
+@section("title", "form")
 
 @section("header")
     <a href="{{url('/')}}">トップ</a>
@@ -8,9 +8,7 @@
 @endsection
 
 
-
 @section("content")
-
 
     {{--if 文による条件分岐--}}
     @if (session('message'))
@@ -37,7 +35,7 @@
 
 
     <div class="article">
-        <form method="POST" action="{{ route('admin_post') }}">
+        <form method="POST" action="{{ route('post') }}">
             <p><input type="text" name="title" size="40"></p>
             <p><textarea name="content" cols="100" rows="20"></textarea></p>
             <input type="submit" value="post"><button>追加section</button>

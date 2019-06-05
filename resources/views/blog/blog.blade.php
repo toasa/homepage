@@ -4,7 +4,7 @@
 
 @section("header")
     <a href="{{url('/')}}">トップ</a>
-    <a href="{{url('/blog/new')}}">書く</a>
+    <a href="{{url('/blog/form')}}">書く</a>
 @endsection
 
 @section("content")

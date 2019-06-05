@@ -19,11 +19,10 @@ Route::get('/blog', function () {
     return view('blog.blog');
 });
 
-// /blog/new に GET でアクセスすると、Postontroller の form メソッドを実行するという意味
+// /blog/form に GET でアクセスすると、Postontroller の form メソッドを実行するという意味
 // name メソッドでエイリアスをつけることができる
-Route::get('/blog/new', 'BlogController@form')->name('admin_form');
-
-Route::post('/blog/post', 'BlogController@post')->name('admin_post');
+Route::get('/blog/form', 'BlogController@form')->name('form');
+Route::post('/blog/post', 'BlogController@post')->name('post');
 
 Route::get('/codes', function () {
     return view('codes');

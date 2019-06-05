@@ -23,7 +23,7 @@ class BlogController extends Controller
     {
         // resources/views 配下にある、どのテンプレートを使うか指定。ディレクトリの階層はピリオドで表現できる
         // この例では resources/views/admin_blog/form.blade.php が読み込まれる
-        return view('blog.new');
+        return view('blog.form');
     }
 
     /**
@@ -48,6 +48,6 @@ class BlogController extends Controller
         // リダイレクトでフォーム画面に戻る
         // route ヘルパーでリダイレクト先を指定。ルートのエイリアスを使う場合は route ヘルパーを使う
         // with メソッドで、セッションに次のリクエスト限りのデータを保存する
-        return redirect()->route('admin_form')->with('message', '記事を保存しました');
+        return redirect()->route('form')->with('message', 'Posting OK');
     }
 }
