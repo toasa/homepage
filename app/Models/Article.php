@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
 class Article extends Model
 {
     // SoftDeletes トレイトを使う
-    // use SoftDeletes;
+    use SoftDeletes;
 
     // 対象テーブルのプライマリキーのカラム名を指定する。デフォルトは 'id' というカラム名が想定されている。
     protected $primaryKey = 'id';
