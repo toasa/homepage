@@ -7,24 +7,51 @@
     <a href="{{url('/blog/form')}}">書く</a>
 @endsection
 
+@php
+    function is_sameday($article1, $article2) {
+        $date1 = substr($article1->created_at, 0, 10);
+        $date2 = substr($article2->created_at, 0, 10);
+        return $date1 == $date2;
+    }
+@endphp
+
 @section("content")
-    <div class="article">
-        @if (count($list) > 0)
-            {{--links メソッドでページングが生成される。しかも生成されるHTMLは Bootstrap と互換性がある--}}
+    @if (count($list) > 0)
+        @php
+        $article = $list[0];
+        $date = substr($article->created_at, 0, 10);
+        @endphp
+            <div class="article">
+                <h2 class="date">{{ $date }}</h2>
+                <div class="section">
+                    <h3 class="title">{{ $article->title }}</h3>
+                    <p>{{ $article->content }}</p>
+                </div> 
+        @for ($i = 1; $i < count($list); $i++)
+            @php
+            $article = $list[$i];
+            $date = substr($article->created_at, 0, 10);
+            @endphp
 
-            @foreach ($list as $article)
-                <div class="article">
-                    <h2 class="date">{{ substr($article->created_at, 0, 10) }}</h2>
-                    <div class="section">
-                        <h3 class="title">{{ $article->title }}</h3>
-                        <p>{{ $article->content }}</p>
-                    </div>
+            @if (is_sameday($list[$i-1], $list[$i]))
+                <div class="section">
+                    <h3 class="title">{{ $article->title }}</h3>
+                    <p>{{ $article->content }}</p>
                 </div>
-            @endforeach
+            @else
+            </div>
+            <div class="article">
+                <h2 class="date">{{ $date }}</h2>
+                <div class="section">
+                    <h3 class="title">{{ $article->title }}</h3>
+                    <p>{{ $article->content }}</p>
+                </div> 
+            @endif
+        @endfor
+            </div>
+    @endif
 
-        @endif
-
-
+    <div class="article">
         <h2 class="date">2019-06-03</h2>
         <div class="section">
             <h3 class="title">浮動小数点数の悲劇</h3>
