@@ -80,4 +80,29 @@ class BlogController extends Controller
             ->route('form', ['id' => $article->id])
             ->with('status', 'Posting OK');
     }
+
+    /**
+     * ブログ記事削除処理
+     *
+     * @param AdminBlogRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(BlogRequest $request)
+    {
+        // 記事IDの取得
+        $id = $request->input('id');
+
+        // Article モデルを取得して delete メソッドを実行することで削除できる
+        // このとき万が一 $article が null になる場合も想定して実装するのが良い（今回は紹介のみで使わないので割愛）
+        //        $article = $this->article->find($id);
+        //        $article->delete();
+
+        // 主キーの値があるなら destroy メソッドで削除することができる
+        // 引数は配列でも可。返り値は削除したレコード数
+        $result = $this->article->destroy($id);
+        $message = ($result) ? 'Delete successed' : 'Delete failed';
+
+        // フォーム画面へリダイレクト
+        return redirect()->route('form')->with('message', $message);
+    }
 }

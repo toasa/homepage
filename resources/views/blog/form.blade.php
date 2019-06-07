@@ -46,5 +46,14 @@
             <input type="hidden" name="id" value="{{ $id }}">
             {{ csrf_field() }}
         </form>
+
+        @if ($id)
+            <br>
+            <form action="{{ route('delete') }}" method="POST">
+                <input type="submit" class="btn btn-primary btn-sm" value="delete">
+                <input type="hidden" name="id" value="{{ $id }}">
+                {{ csrf_field() }}
+            </form>
+        @endif
     </div>
 @endsection
