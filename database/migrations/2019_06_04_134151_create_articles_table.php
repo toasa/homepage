@@ -17,7 +17,8 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('content');
-            $table->timestamps();
+            $table->softDeletes();      // ソフトデリート用の deleted_at カラムを作成
+            $table->timestamps();       // created_at と update_at カラムを作成
         });
     }
 

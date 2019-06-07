@@ -23,6 +23,7 @@ Route::get('/blog', function () {
 // name メソッドでエイリアスをつけることができる
 Route::get('/blog/form/{id?}', 'BlogController@form')->name('form');
 Route::post('/blog/post', 'BlogController@post')->name('post');
+Route::post('/blog/delete', 'BlogController@delete')->name('delete');
 
 Route::get('/codes', function () {
     return view('codes');
