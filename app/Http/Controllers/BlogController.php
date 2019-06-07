@@ -19,11 +19,37 @@ class BlogController extends Controller
         $this->article = $article;
     }
 
-    public function form()
+    public function form(int $id = null)
     {
-        // resources/views 配下にある、どのテンプレートを使うか指定。ディレクトリの階層はピリオドで表現できる
-        // この例では resources/views/admin_blog/form.blade.php が読み込まれる
-        return view('blog.form');
+        // $id == nullの場合は新規記事作成
+        // $id != nullの場合は記事の編集
+        //     1) 通常編集時
+        //     2) validationエラーによるフォーム画面遷移時
+
+        // メソッドの引数に指定すれば、ルートパラメータを取得できる
+
+        // Eloquent モデルはクエリビルダとしても動作するので find メソッドで記事データを取得
+        // 返り値は null か App\Models\Article Object
+        $article = $this->article->find($id);
+
+        // 記事データがあれば toArray メソッドで配列にしておき、フォーマットした post_date を入れる
+        $input = [];
+        if ($article) {
+            $input = $article->toArray();
+        } else {
+            $id = null;
+        }
+
+        // old ヘルパーを使うと、直前のリクエストのフラッシュデータを取得できる
+        // ここではバリデートエラーとなったときに、入力していた値を old ヘルパーで取得する
+        // DBから取得した値よりも優先して表示するため、array_merge の第二引数に設定する
+        $input = array_merge($input, old());
+
+        // View テンプレートへ値を渡すときは、第二引数に連想配列を設定する
+        // View テンプレートでは 連想配列のキー名で値を取り出せる
+        // return view('blog.form', ['input' => $input, 'id' => $id]);
+        // compact 関数を使うと便利
+        return view('blog.form', compact('input', 'id'));
     }
 
     /**
@@ -34,20 +60,24 @@ class BlogController extends Controller
      */
     public function post(BlogRequest $request)
     {
-        // こちらも引数にタイプヒントを指定すると、
-        // BlogRequest のインスタンスが生成される（メソッドインジェクション）
-        // そして、BlogRequest で設定したバリデートも実行される（フォームリクエストバリデーション）
-
         // 入力値の取得
         $input = $request->input();
 
-        // create メソッドで複数代入を実行する。
-        // 対象テーブルのカラム名と配列のキー名が一致する場合、一致するカラムに一致するデータが入る
-        $article = $this->article->create($input);
+        // array_get ヘルパは配列から指定されたキーの値を取り出すメソッド
+        // 指定したキーが存在しない場合のデフォルト値を第三引数に設定できる
+        // 指定したキーが存在しなくても、エラーにならずデフォルト値が返るのが便利
+        $id = array_get($input, 'id');
+
+        // Eloquent モデルから利用できる updateOrCreate メソッドは、第一引数の値でDBを検索し
+        // レコードが見つかったら第二引数の値でそのレコードを更新、見つからなかったら新規作成します
+        // ここでは id でレコードを検索し、第二引数の入力値でレコードを更新、または新規作成しています
+        $article = $this->article->updateOrCreate(compact('id'), $input);
 
         // リダイレクトでフォーム画面に戻る
         // route ヘルパーでリダイレクト先を指定。ルートのエイリアスを使う場合は route ヘルパーを使う
         // with メソッドで、セッションに次のリクエスト限りのデータを保存する
-        return redirect()->route('form')->with('message', 'Posting OK');
+        return redirect()
+            ->route('form', ['id' => $article->id])
+            ->with('status', 'Posting OK');
     }
 }

@@ -36,9 +36,14 @@
 
     <div class="article">
         <form method="POST" action="{{ route('post') }}">
-            <p><input type="text" name="title" size="40"></p>
-            <p><textarea name="content" cols="100" rows="20"></textarea></p>
+            <p>
+                <input type="text" name="title" value="{{isset($input['title']) ? $input['title'] : ''}}" size="40" placeholder="title">
+            </p>
+            <p>
+                <textarea name="content" cols="100" rows="20" placeholder="content">{{isset($input['content']) ? $input['content'] : ''}}</textarea>
+            </p>
             <input type="submit" value="post"><button>追加section</button>
+            <input type="hidden" name="id" value="{{ $id }}">
             {{ csrf_field() }}
         </form>
     </div>

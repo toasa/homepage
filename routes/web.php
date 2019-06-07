@@ -21,7 +21,7 @@ Route::get('/blog', function () {
 
 // /blog/form に GET でアクセスすると、Postontroller の form メソッドを実行するという意味
 // name メソッドでエイリアスをつけることができる
-Route::get('/blog/form', 'BlogController@form')->name('form');
+Route::get('/blog/form/{id?}', 'BlogController@form')->name('form');
 Route::post('/blog/post', 'BlogController@post')->name('post');
 
 Route::get('/codes', function () {

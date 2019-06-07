@@ -24,6 +24,7 @@ class BlogRequest extends FormRequest
     public function rules()
     {
         return [
+            'id'        => 'integer|nullable',              // 整数・null でもOK
             'title'     => 'required|string|max:255',       // 必須・文字列・最大値（255文字まで）
             'content'   => 'required|string|max:10000',     // 必須・文字列・最大値（10000文字まで）
         ];
@@ -36,6 +37,7 @@ class BlogRequest extends FormRequest
         // プレースホルダーを使うこともできる
         // 下記の例では :max の部分にそれぞれ設定した値（255, 10000）が入る
         return [
+            'id.integer'          =>    '記事IDは整数でなければなりません',
             'title.required'      =>    'タイトルは必須です',
             'title.string'        =>    'タイトルは文字列を入力してください',
             'title.max'           =>    'タイトルは:max文字以内で入力してください',
