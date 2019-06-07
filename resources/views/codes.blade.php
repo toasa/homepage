@@ -25,7 +25,7 @@
         <h3 class="title">
             <a class="code" href="https://github.com/Toasa/bf_interpreter">bf interpreter</a>
         </h3>
-        <p>C言語で書かれたbrainf*ckインタプリタ</p>
+        <p>C言語で書いたbrainf*ckインタプリタ</p>
     </div>
 
     <div class="article">
