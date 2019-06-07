@@ -8,10 +8,21 @@
 @endsection
 
 @php
-    function is_sameday($article1, $article2) {
-        $date1 = substr($article1->created_at, 0, 10);
-        $date2 = substr($article2->created_at, 0, 10);
-        return $date1 == $date2;
+    function print_article_stack($stack, $date) {
+        echo '<div class="article">
+            <h2 class="date">' . $date . '</h2>';
+            while (!empty($stack)) {
+                $article = array_pop($stack);
+                echo '<div class="section">
+                    <h3 class="title">' . $article->title . '</h3>
+                    <p>' . $article->content . '</p>
+                </div>';
+            }
+        echo '</div>';
+    }
+
+    function get_date($article) {
+        return substr($article->created_at, 0, 10);
     }
 @endphp
 
@@ -19,36 +30,33 @@
     @if (count($list) > 0)
         @php
         $article = $list[0];
-        $date = substr($article->created_at, 0, 10);
+        $stack_date = get_date($article);
+        $article_stack = [$article];
         @endphp
-            <div class="article">
-                <h2 class="date">{{ $date }}</h2>
-                <div class="section">
-                    <h3 class="title">{{ $article->title }}</h3>
-                    <p>{{ $article->content }}</p>
-                </div> 
+
         @for ($i = 1; $i < count($list); $i++)
             @php
             $article = $list[$i];
-            $date = substr($article->created_at, 0, 10);
+            $cur_date = get_date($article);
             @endphp
 
-            @if (is_sameday($list[$i-1], $list[$i]))
-                <div class="section">
-                    <h3 class="title">{{ $article->title }}</h3>
-                    <p>{{ $article->content }}</p>
-                </div>
+            @if ($cur_date == $stack_date)
+                @php
+                array_push($article_stack, $article);
+                @endphp
             @else
-            </div>
-            <div class="article">
-                <h2 class="date">{{ $date }}</h2>
-                <div class="section">
-                    <h3 class="title">{{ $article->title }}</h3>
-                    <p>{{ $article->content }}</p>
-                </div> 
+                @php
+                print_article_stack($article_stack, $stack_date);
+                $stack_date = $cur_date;
+                $article_stack = [$article];
+                @endphp
             @endif
         @endfor
-            </div>
+        @if (!empty($article_stack))
+            @php
+            print_article_stack($article_stack, $stack_date);
+            @endphp
+        @endif
     @endif
 
     <div class="article">
