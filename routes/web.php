@@ -15,9 +15,11 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/blog', function () {
-    return view('blog.blog');
-});
+// Route::get('/blog', function () {
+//     return view('blog.blog');
+// });
+
+Route::get('/blog', 'BlogController@list')->name('list');
 
 // /blog/form に GET でアクセスすると、Postontroller の form メソッドを実行するという意味
 // name メソッドでエイリアスをつけることができる

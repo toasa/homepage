@@ -9,6 +9,22 @@
 
 @section("content")
     <div class="article">
+        @if (count($list) > 0)
+            {{--links メソッドでページングが生成される。しかも生成されるHTMLは Bootstrap と互換性がある--}}
+
+            @foreach ($list as $article)
+                <div class="article">
+                    <h2 class="date">{{ substr($article->created_at, 0, 10) }}</h2>
+                    <div class="section">
+                        <h3 class="title">{{ $article->title }}</h3>
+                        <p>{{ $article->content }}</p>
+                    </div>
+                </div>
+            @endforeach
+
+        @endif
+
+
         <h2 class="date">2019-06-03</h2>
         <div class="section">
             <h3 class="title">浮動小数点数の悲劇</h3>

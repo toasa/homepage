@@ -105,4 +105,16 @@ class BlogController extends Controller
         // フォーム画面へリダイレクト
         return redirect()->route('form')->with('message', $message);
     }
+
+    const NUM_PER_PAGE = 10;
+    /**
+     * ブログ記事一覧画面
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function list()
+    {
+        $list = $this->article->getArticleList(self::NUM_PER_PAGE);
+        return view('blog.blog', compact('list'));
+    }
 }
