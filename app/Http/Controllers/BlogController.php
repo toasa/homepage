@@ -19,6 +19,23 @@ class BlogController extends Controller
         $this->article = $article;
     }
 
+    const NUM_PER_PAGE = 10;
+    /**
+     * ブログ記事一覧画面
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function list()
+    {
+        $list = $this->article->getArticleList(self::NUM_PER_PAGE);
+        return view('blog.blog', compact('list'));
+    }
+
+    /**
+     * ブログ記事入力フォーム
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function form(int $id = null)
     {
         // $id == nullの場合は新規記事作成
@@ -104,17 +121,5 @@ class BlogController extends Controller
 
         // フォーム画面へリダイレクト
         return redirect()->route('form')->with('message', $message);
-    }
-
-    const NUM_PER_PAGE = 10;
-    /**
-     * ブログ記事一覧画面
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function list()
-    {
-        $list = $this->article->getArticleList(self::NUM_PER_PAGE);
-        return view('blog.blog', compact('list'));
     }
 }
