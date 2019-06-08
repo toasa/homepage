@@ -40,8 +40,8 @@ class BlogController extends Controller
     {
         // $id == nullの場合は新規記事作成
         // $id != nullの場合は記事の編集
-        //     1) 通常編集時
-        //     2) validationエラーによるフォーム画面遷移時
+        //     -> 通常編集時 OR
+        //     -> validationエラーによるフォーム画面遷移時
 
         // メソッドの引数に指定すれば、ルートパラメータを取得できる
 
@@ -64,8 +64,8 @@ class BlogController extends Controller
 
         // View テンプレートへ値を渡すときは、第二引数に連想配列を設定する
         // View テンプレートでは 連想配列のキー名で値を取り出せる
+        // 下の2文は同じ意味
         // return view('blog.form', ['input' => $input, 'id' => $id]);
-        // compact 関数を使うと便利
         return view('blog.form', compact('input', 'id'));
     }
 
@@ -86,7 +86,7 @@ class BlogController extends Controller
         $id = array_get($input, 'id');
 
         // Eloquent モデルから利用できる updateOrCreate メソッドは、第一引数の値でDBを検索し
-        // レコードが見つかったら第二引数の値でそのレコードを更新、見つからなかったら新規作成します
+        // レコードが見つかったら第二引数の値でそのレコードを更新、見つからなかったら新規作成する
         // ここでは id でレコードを検索し、第二引数の入力値でレコードを更新、または新規作成しています
         $article = $this->article->updateOrCreate(compact('id'), $input);
 
