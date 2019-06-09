@@ -135,4 +135,5 @@
             <p>sublime: vscodeより軽く、簡単な作業にはこちら。ダークテーマが今ひとつかな。</p>
         </div>
     </div>
+    {{ $list->links() }}
 @endsection
