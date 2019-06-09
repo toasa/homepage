@@ -42,6 +42,7 @@
             <p>
                 <textarea name="content" cols="100" rows="20" placeholder="content">{{isset($input['content']) ? $input['content'] : ''}}</textarea>
             </p>
+            <input type="submit" value="post">
             <input type="hidden" name="id" value="{{ $id }}">
             {{ csrf_field() }}
         </form>
