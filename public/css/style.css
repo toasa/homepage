@@ -46,6 +46,13 @@ textarea {
     color:#375EAB;      
 }
 
+.blog_edit {
+    font-size: 80%;
+    text-decoration: none;
+    right: 60px;
+    position: absolute;
+}
+
 .footer {
     color: #aaaaaa;
     font-size: 80%;

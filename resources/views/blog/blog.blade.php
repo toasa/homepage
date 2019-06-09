@@ -7,6 +7,7 @@
     <a href="{{url('/blog/form')}}">書く</a>
 @endsection
 
+{{-- 記事一覧表示用の関数 --}}
 @php
     function print_article_stack($stack, $date) {
         echo '<div class="article">
@@ -14,7 +15,9 @@
             while (!empty($stack)) {
                 $article = array_pop($stack);
                 echo '<div class="section">
-                    <h3 class="title">' . $article->title . '</h3>
+                    <h3 class="title">
+                        <a href="' . '/blog/form/'. $article->id . '">' . $article->title . '</a>
+                    </h3>
                     <p>' . $article->content . '</p>
                 </div>';
             }
