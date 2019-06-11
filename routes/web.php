@@ -19,12 +19,16 @@ Route::get('/', function () {
 Route::prefix('/blog')->group(function() {
     // ブログトップページ（記事一覧を表示）へ
     Route::get('', 'BlogController@list')->name('list');
-    // ブログ新規投稿、または各ブログ編集画面へ
-    Route::get('form/{id?}', 'BlogController@form')->name('form');
-    // ブログ投稿
-    Route::post('post', 'BlogController@post')->name('post');
-    // ブログ削除
-    Route::post('delete', 'BlogController@delete')->name('delete');
+
+    // 投稿、編集、削除の操作にはBasic認証を設定する
+    Route::group(['middleware' => 'auth.very_basic', 'prefix' => ''], function() {
+        // ブログ新規投稿、または各ブログ編集画面へ
+        Route::get('form/{id?}', 'BlogController@form')->name('form');
+        // ブログ投稿
+        Route::post('post', 'BlogController@post')->name('post');
+        // ブログ削除
+        Route::post('delete', 'BlogController@delete')->name('delete');
+    });
 });
 
 // 書いたコードの一覧ページへ

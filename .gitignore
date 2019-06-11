@@ -7,6 +7,7 @@
 .phpunit.result.cache
 .vscode
 .DS_Store
+very_basic_auth.php
 Homestead.json
 Homestead.yaml
 npm-debug.log

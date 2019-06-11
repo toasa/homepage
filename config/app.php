@@ -176,6 +176,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Basic認証用
+        Olssonm\VeryBasicAuth\VeryBasicAuthServiceProvider::class,
     ],
 
     /*
