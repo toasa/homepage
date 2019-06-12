@@ -27,8 +27,9 @@
                 @yield('content')
             </div>
         </div>
-    </div>
-    <div class="footer">
-        <p>Atsushi Tohyama / atsushi.tohyama.160.333 at gmail.com</p>
+
+        <div class="footer">
+            <p>Atsushi Tohyama / atsushi.tohyama.160.333 at gmail.com</p>
+        </div>
     </div>
 </body>
